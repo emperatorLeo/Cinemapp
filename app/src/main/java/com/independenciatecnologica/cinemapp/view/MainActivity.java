@@ -1,11 +1,14 @@
-package com.independenciatecnologica.cinemapp;
+package com.independenciatecnologica.cinemapp.view;
 
+import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.independenciatecnologica.cinemapp.R;
 import com.independenciatecnologica.cinemapp.api.CinemappClient;
 import com.independenciatecnologica.cinemapp.api.CinemappService;
+import com.independenciatecnologica.cinemapp.databinding.ActivityMainBinding;
 import com.independenciatecnologica.cinemapp.model.ResultCallMovie;
 
 import retrofit2.Call;
@@ -18,9 +21,15 @@ private String TAG = "LeoDev";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+       // setContentView(R.layout.activity_main);
+           initBinding();
            Calls();
         }
+
+    private void initBinding(){
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        binding.setLifecycleOwner(this);
+    }
 
     private void Calls(){
         CinemappClient client = CinemappService.builder();
