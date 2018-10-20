@@ -3,4 +3,10 @@
     <string name="movies">Movies</string>
     <string name="series" translatable="false">Series</string>
     <string name="search">Search</string>
+
+    <!--labels -->
+    <string name="label_vote">Votes :</string>
+    <string name="label_released">Released :</string>
+    <string name="label_details">Details</string>
+
 </resources>

@@ -2,4 +2,10 @@
 <resources>
     <string name="movies">Peliculas</string>
     <string name="search">Buscar</string>
+
+    <!-- Labels español-->
+    <string name="label_vote">Votos :</string>
+    <string name="label_released">Estreno :</string>
+    <string name="label_details">Detalles</string>
+
 </resources>
