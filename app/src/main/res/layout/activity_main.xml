@@ -2,36 +2,44 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.independenciatecnologica.cinemapp.viewModel.MainActivityViewModel"/>
+    </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.MainActivity">
         <android.support.v7.widget.SearchView
+            android:id="@+id/searcher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
             app:iconifiedByDefault="false"
+            app:queryHint="@string/search"
+            />
+        <!-- -->
+                <FrameLayout
+                    android:id="@+id/bigContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toBottomOf="@id/searcher"
+                    android:layout_marginTop="50dp">
+                </FrameLayout>
 
-            app:queryHint="@string/search"/>
+        <!--
+                       <android.support.design.widget.BottomNavigationView
+                           android:id="@+id/bottomNavigation"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:background="@color/colorPrimary"
+                           app:itemIconTint="@drawable/selector_bottomview"
+                           app:itemTextColor="@drawable/selector_bottomview"
+                           app:menu="@menu/menu_bottomview"
+                           app:layout_constraintBottom_toBottomOf="parent" />
+                       android:onItemSelected="@={()->viewModel.onNavigationItemSelected()}"-->
 
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </FrameLayout>
-
-
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottomNavigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            app:itemIconTint="@drawable/selector_bottomview"
-            app:itemTextColor="@drawable/selector_bottomview"
-            app:menu="@menu/menu_bottomview"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-        </android.support.design.widget.BottomNavigationView>
-
-    </android.support.constraint.ConstraintLayout>
-</layout>
+            </android.support.constraint.ConstraintLayout>
+        </layout>
