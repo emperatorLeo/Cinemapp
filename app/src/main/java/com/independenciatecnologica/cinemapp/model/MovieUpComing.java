@@ -14,7 +14,7 @@ import com.google.gson.annotations.SerializedName;
 import static com.independenciatecnologica.cinemapp.utils.Constants.TAG;
 import static com.independenciatecnologica.cinemapp.utils.Constants.imageItemBaseUrl;
 
-@Entity(tableName = "movie_upcoming")
+@Entity(tableName = "table_upcoming")
 public class MovieUpComing {
     @PrimaryKey
     @NonNull
