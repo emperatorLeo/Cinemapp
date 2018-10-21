@@ -13,11 +13,14 @@ import android.view.ViewGroup;
 
 import com.independenciatecnologica.cinemapp.R;
 import com.independenciatecnologica.cinemapp.adapter.RecyclerMovieAdapter;
+import com.independenciatecnologica.cinemapp.adapter.TopRatedAdapter;
 import com.independenciatecnologica.cinemapp.api.CinemappClient;
 import com.independenciatecnologica.cinemapp.api.CinemappService;
 import com.independenciatecnologica.cinemapp.databinding.FragmentMovieTopRatedBinding;
+import com.independenciatecnologica.cinemapp.model.MovieTopRated;
 import com.independenciatecnologica.cinemapp.model.Movies;
 import com.independenciatecnologica.cinemapp.model.ResultCallMovie;
+import com.independenciatecnologica.cinemapp.model.ResultCallTopRated;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,8 +36,8 @@ import static com.independenciatecnologica.cinemapp.utils.Constants.apiKey;
 public class MovieTopRatedFragment extends Fragment {
     private View view;
     private FragmentMovieTopRatedBinding binding;
-    private RecyclerMovieAdapter adapter;
-    private List<Movies> lista = new ArrayList<>();
+    private TopRatedAdapter adapter;
+    private List<MovieTopRated> lista = new ArrayList<>();
 
     @Nullable
     @Override
@@ -48,32 +51,31 @@ public class MovieTopRatedFragment extends Fragment {
 
     private void call(){
         CinemappClient client = CinemappService.builder();
-        Call<ResultCallMovie> call = client.moviesTopRated(apiKey);
-        call.enqueue(new Callback<ResultCallMovie>() {
+        Call<ResultCallTopRated> call = client.moviesTopRated(apiKey);
+        call.enqueue(new Callback<ResultCallTopRated>() {
             @Override
-            public void onResponse(Call<ResultCallMovie> call, Response<ResultCallMovie> response) {
-                Log.d(TAG,"calling from fragment : "+call.request().toString());
+            public void onResponse(Call<ResultCallTopRated> call, Response<ResultCallTopRated> response) {
+                Log.d("TopRated","calling from TopRated fragment : "+call.request().toString());
 
-                if(response == null || response.body().getMovies().isEmpty()){
-                    Log.d(TAG,"calling from fragment : is null");
-                }else{
-                    Log.d(TAG,"is feeding");
                     feed(response.body().getMovies());
-                }
+                    Log.d("TopRated","size"+response.body().getMovies().size());
+
+
             }
 
             @Override
-            public void onFailure(Call<ResultCallMovie> call, Throwable t) {
+            public void onFailure(Call<ResultCallTopRated> call, Throwable t) {
                 Log.e(TAG,"error: "+t.getMessage());
             }
         });
         }
 
-     private List<Movies> feed(List<Movies> items){
-         binding.topRatedProgresBar.setVisibility(View.GONE);
+     private List<MovieTopRated> feed(List<MovieTopRated> items){
+
          if(items!=null && !items.isEmpty()) {
+            binding.topRatedProgresBar.setVisibility(View.GONE);
             lista.addAll(items);
-            adapter = new RecyclerMovieAdapter(lista);
+            adapter = new TopRatedAdapter(lista);
             binding.topRatedList.setAdapter(adapter);
             binding.topRatedList.setLayoutManager(new LinearLayoutManager(getActivity()));
         }else{ Log.d(TAG,"list fragment is empty");}

@@ -17,6 +17,7 @@ import com.independenciatecnologica.cinemapp.api.CinemappClient;
 import com.independenciatecnologica.cinemapp.api.CinemappService;
 import com.independenciatecnologica.cinemapp.databinding.ActivityMainBinding;
 import com.independenciatecnologica.cinemapp.model.ResultCallMovie;
+import com.independenciatecnologica.cinemapp.model.ResultCallUpComing;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,17 +79,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void Calls(){
         CinemappClient client = CinemappService.builder();
-        Call<ResultCallMovie> call = client.moviesTopRated(apiKey);
-        call.enqueue(new Callback<ResultCallMovie>() {
+        Call<ResultCallUpComing> call = client.moviesUpComing(apiKey);
+        call.enqueue(new Callback<ResultCallUpComing>() {
             @Override
-            public void onResponse(Call<ResultCallMovie> call, Response<ResultCallMovie> response) {
+            public void onResponse(Call<ResultCallUpComing> call, Response<ResultCallUpComing> response) {
                 Log.d(TAG,"call: "+call.request().toString());
                 Log.d(TAG,"Title: "+response.body().getMovies().get(0).getTitle());
                 Log.d(TAG,"size: "+response.body().getMovies().size());
             }
 
             @Override
-            public void onFailure(Call<ResultCallMovie> call, Throwable t) {
+            public void onFailure(Call<ResultCallUpComing> call, Throwable t) {
                 Log.e(TAG,"error: "+t.getMessage());
             }
         });

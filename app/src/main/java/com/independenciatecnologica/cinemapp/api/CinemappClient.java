@@ -2,7 +2,10 @@ package com.independenciatecnologica.cinemapp.api;
 
 import com.independenciatecnologica.cinemapp.model.MovieDetails;
 import com.independenciatecnologica.cinemapp.model.ResultCallMovie;
+import com.independenciatecnologica.cinemapp.model.ResultCallPopular;
 import com.independenciatecnologica.cinemapp.model.ResultCallSeries;
+import com.independenciatecnologica.cinemapp.model.ResultCallTopRated;
+import com.independenciatecnologica.cinemapp.model.ResultCallUpComing;
 import com.independenciatecnologica.cinemapp.model.SeriesDetails;
 
 import retrofit2.Call;
@@ -13,13 +16,13 @@ import retrofit2.http.Query;
 public interface CinemappClient {
 
    @GET("/3/movie/top_rated")
-   Call<ResultCallMovie> moviesTopRated(@Query("api_key")String apiKey);
+   Call<ResultCallTopRated> moviesTopRated(@Query("api_key")String apiKey);
 
    @GET("/3/movie/popular")
-   Call<ResultCallMovie> moviesPopular(@Query("api_key")String apiKey);
+   Call<ResultCallPopular> moviesPopular(@Query("api_key")String apiKey);
 
    @GET("/3/movie/upcoming")
-   Call<ResultCallMovie> moviesUpComing(@Query("api_key")String apiKey);
+   Call<ResultCallUpComing> moviesUpComing(@Query("api_key")String apiKey);
 
    @GET("/3/movie/{movie_id}")
    Call<MovieDetails> moviesDetails(@Path("movie_id")String id);

@@ -12,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.independenciatecnologica.cinemapp.R;
+import com.independenciatecnologica.cinemapp.adapter.PopularAdapter;
 import com.independenciatecnologica.cinemapp.adapter.RecyclerMovieAdapter;
 import com.independenciatecnologica.cinemapp.api.CinemappClient;
 import com.independenciatecnologica.cinemapp.api.CinemappService;
 import com.independenciatecnologica.cinemapp.databinding.FragmentMoviePopularBinding;
+import com.independenciatecnologica.cinemapp.model.MoviePopular;
 import com.independenciatecnologica.cinemapp.model.Movies;
 import com.independenciatecnologica.cinemapp.model.ResultCallMovie;
+import com.independenciatecnologica.cinemapp.model.ResultCallPopular;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +35,8 @@ import static com.independenciatecnologica.cinemapp.utils.Constants.apiKey;
 public class MoviePopularFragment extends Fragment {
    private View view;
    private FragmentMoviePopularBinding binding ;
-   private List<Movies> lista = new ArrayList<>();
-   private RecyclerMovieAdapter adapter;
+   private List<MoviePopular> lista = new ArrayList<>();
+   private PopularAdapter adapter;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_movie_popular,container,false);
@@ -44,10 +47,10 @@ public class MoviePopularFragment extends Fragment {
 
     private void call(){
         CinemappClient client = CinemappService.builder();
-        Call<ResultCallMovie> call = client.moviesPopular(apiKey);
-        call.enqueue(new Callback<ResultCallMovie>() {
+        Call<ResultCallPopular> call = client.moviesPopular(apiKey);
+        call.enqueue(new Callback<ResultCallPopular>() {
             @Override
-            public void onResponse(Call<ResultCallMovie> call, Response<ResultCallMovie> response) {
+            public void onResponse(Call<ResultCallPopular> call, Response<ResultCallPopular> response) {
                 Log.d(TAG,"calling from fragment : "+call.request().toString());
 
                     feed(response.body().getMovies());
@@ -55,18 +58,18 @@ public class MoviePopularFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ResultCallMovie> call, Throwable t) {
+            public void onFailure(Call<ResultCallPopular> call, Throwable t) {
                 Log.e(TAG,"error: "+t.getMessage());
             }
         });
     }
 
-    private List<Movies> feed(List<Movies> items){
+    private List<MoviePopular> feed(List<MoviePopular> items){
 
         if(items!=null && !items.isEmpty()) {
             binding.popularProgresBar.setVisibility(View.GONE);
             lista.addAll(items);
-            adapter = new RecyclerMovieAdapter(lista);
+            adapter = new PopularAdapter(lista);
             binding.popularList.setAdapter(adapter);
             binding.popularList.setLayoutManager(new LinearLayoutManager(getActivity()));
         }else{ Log.d(TAG,"list fragment is empty");}

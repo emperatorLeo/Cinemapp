@@ -14,11 +14,14 @@ import android.view.ViewGroup;
 
 import com.independenciatecnologica.cinemapp.R;
 import com.independenciatecnologica.cinemapp.adapter.RecyclerMovieAdapter;
+import com.independenciatecnologica.cinemapp.adapter.UpComingAdapter;
 import com.independenciatecnologica.cinemapp.api.CinemappClient;
 import com.independenciatecnologica.cinemapp.api.CinemappService;
 import com.independenciatecnologica.cinemapp.databinding.FragmentMovieUpcomingBinding;
+import com.independenciatecnologica.cinemapp.model.MovieUpComing;
 import com.independenciatecnologica.cinemapp.model.Movies;
 import com.independenciatecnologica.cinemapp.model.ResultCallMovie;
+import com.independenciatecnologica.cinemapp.model.ResultCallUpComing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +36,8 @@ import static com.independenciatecnologica.cinemapp.utils.Constants.apiKey;
 public class MovieUpComingFragment extends Fragment {
 
     private FragmentMovieUpcomingBinding binding;
-    private List<Movies> lista = new ArrayList<>();
-    private RecyclerMovieAdapter adapter;
+    private List<MovieUpComing> lista = new ArrayList<>();
+    private UpComingAdapter adapter;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_movie_upcoming,container,false);
@@ -45,10 +48,10 @@ public class MovieUpComingFragment extends Fragment {
 
     private void call(){
         CinemappClient client = CinemappService.builder();
-        Call<ResultCallMovie> call = client.moviesUpComing(apiKey);
-        call.enqueue(new Callback<ResultCallMovie>() {
+        Call<ResultCallUpComing> call = client.moviesUpComing(apiKey);
+        call.enqueue(new Callback<ResultCallUpComing>() {
             @Override
-            public void onResponse(Call<ResultCallMovie> call, Response<ResultCallMovie> response) {
+            public void onResponse(Call<ResultCallUpComing> call, Response<ResultCallUpComing> response) {
                 Log.d(TAG,"calling from fragment : "+call.request().toString());
 
                 if(response == null || response.body().getMovies().isEmpty()){
@@ -60,17 +63,17 @@ public class MovieUpComingFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ResultCallMovie> call, Throwable t) {
+            public void onFailure(Call<ResultCallUpComing> call, Throwable t) {
                 Log.e(TAG,"error: "+t.getMessage());
             }
         });
     }
 
-    private List<Movies> feed(List<Movies> items){
+    private List<MovieUpComing> feed(List<MovieUpComing> items){
          binding.upComingProgresBar.setVisibility(View.GONE);
         if(items!=null && !items.isEmpty()) {
             lista.addAll(items);
-            adapter = new RecyclerMovieAdapter(lista);
+            adapter = new UpComingAdapter(lista);
             binding.upComingList.setAdapter(adapter);
             binding.upComingList.setLayoutManager(new LinearLayoutManager(getActivity()));
         }else{ Log.d(TAG,"list fragment is empty");}
