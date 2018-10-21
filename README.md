@@ -31,14 +31,15 @@ Segun mi experiencia un buen codigo o codigo limpio deberia cumplir con varias c
 * El codigo debe seguir una convencion en los nombres de variables,metodos,clases,etc.
 
 <b>Librerias y herramientas usadas</b>
+
 Para hacer esta app utilicé: 
 
-*AndroidRoom para las base de datos
-*DataBinding para enlazar la vista con la logica
-*LiveData para que la vista cambiara cuando la data lo haga
-*MVVM como patron de diseño
-*RecyclerView para presentar la data
-*Retrofit para hacer las llamadas a la api
+* AndroidRoom para las base de datos.
+* DataBinding para enlazar la vista con la logica.
+* LiveData para que la vista cambiara cuando la data lo haga.
+* MVVM como patron de diseño.
+* RecyclerView para presentar la data.
+* Retrofit para hacer las llamadas a la api.
 
 
 
