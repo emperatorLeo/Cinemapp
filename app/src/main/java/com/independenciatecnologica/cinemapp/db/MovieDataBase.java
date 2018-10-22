@@ -14,7 +14,6 @@ import com.independenciatecnologica.cinemapp.model.MovieTopRated;
 import com.independenciatecnologica.cinemapp.model.MovieUpComing;
 
 @Database(entities = {MovieTopRated.class,MovieUpComing.class,MoviePopular.class},version = 1)
-
 public abstract class MovieDataBase extends RoomDatabase {
 
     public abstract MovieDao movieDao();
@@ -32,6 +31,7 @@ public abstract class MovieDataBase extends RoomDatabase {
                 }
             }
         }
+        if(MovieDataBase.INSTANCE.mDatabase == null)Log.d("MovieDB","DataBase doesn't exist!");
         return INSTANCE;
     }
 
@@ -40,7 +40,7 @@ public abstract class MovieDataBase extends RoomDatabase {
                 @Override
                 public void onOpen(@NonNull SupportSQLiteDatabase db) {
                     super.onOpen(db);
-                    new DeleteAll(INSTANCE).execute();
+                    //new DeleteAll(INSTANCE).execute();
                 }
             };
     private static class DeleteAll extends AsyncTask<Void,Void,Void> {

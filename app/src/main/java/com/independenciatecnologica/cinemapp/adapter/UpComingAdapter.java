@@ -1,5 +1,6 @@
 package com.independenciatecnologica.cinemapp.adapter;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,10 +8,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.independenciatecnologica.cinemapp.R;
-import com.independenciatecnologica.cinemapp.databinding.ItemMovieBinding;
 import com.independenciatecnologica.cinemapp.databinding.ItemUpcomingBinding;
 import com.independenciatecnologica.cinemapp.model.MovieUpComing;
-import com.independenciatecnologica.cinemapp.model.Movies;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +18,18 @@ import java.util.List;
 public class UpComingAdapter extends RecyclerView.Adapter<UpComingAdapter.MovieHolder> {
 
     private List<MovieUpComing> listItem = new ArrayList<>();
+    private LayoutInflater inflater;
 
-    public UpComingAdapter(List<MovieUpComing> list){
+    public UpComingAdapter(Context context){
+        inflater = LayoutInflater.from(context);
+    }
+    public void setInfo(List<MovieUpComing> list){
         this.listItem.addAll(list);
     }
 
 
     @Override
     public MovieHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         ItemUpcomingBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.item_upcoming,viewGroup,false);
         return new MovieHolder(binding);

@@ -1,5 +1,6 @@
 package com.independenciatecnologica.cinemapp.adapter;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -18,15 +19,19 @@ import java.util.List;
 public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MovieHolder> {
 
     private List<MoviePopular> listItem = new ArrayList<>();
+    private LayoutInflater inflater;
+    public PopularAdapter(Context context){
 
-    public PopularAdapter(List<MoviePopular> list){
+        inflater = LayoutInflater.from(context);
+    }
+    public void setInfo(List<MoviePopular> list){
         this.listItem.addAll(list);
     }
 
 
     @Override
     public MovieHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        //LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         ItemPopularBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.item_popular,viewGroup,false);
         return new MovieHolder(binding);

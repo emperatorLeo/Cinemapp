@@ -1,5 +1,6 @@
 package com.independenciatecnologica.cinemapp.adapter;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -17,15 +18,20 @@ import java.util.List;
 
 public class TopRatedAdapter  extends RecyclerView.Adapter<TopRatedAdapter.MovieHolder>{
     private List<MovieTopRated> listItem = new ArrayList<>();
+    private LayoutInflater inflater ;
 
-    public TopRatedAdapter(List<MovieTopRated> list){
+    public TopRatedAdapter(Context context){
+       inflater = LayoutInflater.from(context);
+    }
+
+    public void setInfo(List<MovieTopRated> list){
         this.listItem.addAll(list);
     }
 
     @NonNull
     @Override
     public MovieHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+       // LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         ItemTopRatedBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.item_top_rated,viewGroup,false);
         return new MovieHolder(binding);

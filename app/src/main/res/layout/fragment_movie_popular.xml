@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <variable
+            name="viewModel"
+            type="com.independenciatecnologica.cinemapp.viewModel.MoviesPopularViewModel"/>
 
     </data>
     <android.support.constraint.ConstraintLayout
@@ -17,7 +20,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            tools:listitem="@layout/item_movie"
             android:layout_marginTop="50dp"
             />
         <ProgressBar
@@ -27,7 +29,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+
+            />
+
+        <!-- android:visibility="@{viewModel.loading}"-->
 
     </android.support.constraint.ConstraintLayout>
 

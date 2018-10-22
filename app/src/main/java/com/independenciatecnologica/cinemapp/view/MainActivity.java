@@ -1,51 +1,46 @@
 package com.independenciatecnologica.cinemapp.view;
 
 import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TabLayout;
+
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.independenciatecnologica.cinemapp.R;
-import com.independenciatecnologica.cinemapp.api.CinemappClient;
-import com.independenciatecnologica.cinemapp.api.CinemappService;
+
 import com.independenciatecnologica.cinemapp.databinding.ActivityMainBinding;
-import com.independenciatecnologica.cinemapp.model.ResultCallMovie;
-import com.independenciatecnologica.cinemapp.model.ResultCallUpComing;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.independenciatecnologica.cinemapp.utils.Constants.apiKey;
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = "LeoDev";
     private FragmentManager manager;
     private FragmentTransaction transaction;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
            initBinding();
-           Calls();
-        }
+
+    }
 
     private void initBinding(){
         getSupportActionBar().hide();
         ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        searchView = (SearchView)findViewById(R.id.searcher);
+        searchView.setFocusable(false);
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
         transaction.replace(R.id.bigContainer,new ContainerMovieFragment());
         transaction.addToBackStack(null);
         transaction.commit();
+
+        /** in case when I want use bottomNavigation*/
 
    /*
         binding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -76,25 +71,7 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigation.setSelectedItemId(R.id.action_movies);*/
         binding.setLifecycleOwner(this);
     }
-
-    private void Calls(){
-        CinemappClient client = CinemappService.builder();
-        Call<ResultCallUpComing> call = client.moviesUpComing(apiKey);
-        call.enqueue(new Callback<ResultCallUpComing>() {
-            @Override
-            public void onResponse(Call<ResultCallUpComing> call, Response<ResultCallUpComing> response) {
-                Log.d(TAG,"call: "+call.request().toString());
-                Log.d(TAG,"Title: "+response.body().getMovies().get(0).getTitle());
-                Log.d(TAG,"size: "+response.body().getMovies().size());
-            }
-
-            @Override
-            public void onFailure(Call<ResultCallUpComing> call, Throwable t) {
-                Log.e(TAG,"error: "+t.getMessage());
-            }
-        });
-    }
-
-
-
 }
+
+
+

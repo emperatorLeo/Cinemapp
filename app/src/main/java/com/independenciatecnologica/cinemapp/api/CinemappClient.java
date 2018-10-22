@@ -1,7 +1,6 @@
 package com.independenciatecnologica.cinemapp.api;
 
 import com.independenciatecnologica.cinemapp.model.MovieDetails;
-import com.independenciatecnologica.cinemapp.model.ResultCallMovie;
 import com.independenciatecnologica.cinemapp.model.ResultCallPopular;
 import com.independenciatecnologica.cinemapp.model.ResultCallSeries;
 import com.independenciatecnologica.cinemapp.model.ResultCallTopRated;
