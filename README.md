@@ -14,9 +14,13 @@ encuentran acciones de botones y data reactiva para los cambios en tiempo real d
 En la carpeta View se encuentran las actividates y fragmentos encargados de mostrar la informacion en una forma 
 que el usuario pueda entenderla. tambien se encuentran los adaptadores de vista.
 
-La carpeta db estan los archivos necesarios para crear la persistencia , en la clase MovieDataBase exactamente es donde
+La carpeta db contiene todos los archivos necesarios para crear la persistencia , en la clase MovieDataBase exactamente es donde
 yace la creacion de la misma , en la interface MovieDao es donde se encuentran las llamadas SQL. Para crearla uso la 
 libreria AndroidRoom.
+
+La clase Respository es la encargada de enlazar las llamadas a la api y a la base de datos con los ViewModels que estan pidiendo 
+la data para posteriormente presentarla en la vista, dentro de Repository se encuentran todas las llamadas usando un Background Thread
+para evitar retardos en la app que puedan conducir al 'crash' the la misma
 
 <b>Principio de Responsabilidad única</b>
 Este princio nos dice que cada clase debe tener una unica responsabilidad , su fin es separar todas las actividades
