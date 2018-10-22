@@ -30,6 +30,7 @@ public class MoviesPopularViewModel extends AndroidViewModel {
         }
         return loading;
     }
+    
 
     public LiveData<List<MoviePopular>> getPopularList(){
        return repository.getPopularList();
