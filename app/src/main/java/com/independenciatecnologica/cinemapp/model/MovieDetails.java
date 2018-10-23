@@ -1,8 +1,17 @@
 package com.independenciatecnologica.cinemapp.model;
 
+import android.databinding.BindingAdapter;
+import android.util.Log;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import static com.independenciatecnologica.cinemapp.utils.Constants.TAG;
+import static com.independenciatecnologica.cinemapp.utils.Constants.imageDetailBaseUrl;
+import static com.independenciatecnologica.cinemapp.utils.Constants.imageItemBaseUrl;
 
 public class MovieDetails {
     @SerializedName("name")
@@ -64,5 +73,12 @@ public class MovieDetails {
 
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
+    }
+    @BindingAdapter({"posterPath"})
+    public static void loadImage(ImageView view, String image ){
+        Log.d(TAG,"on movies Model: "+imageDetailBaseUrl+image);
+        Glide.with(view.getContext())
+                .load(imageItemBaseUrl+image)
+                .into(view);
     }
 }

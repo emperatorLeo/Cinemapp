@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +36,12 @@ public class MoviePopularFragment extends Fragment {
         viewModel.getPopularList().observe(this, new Observer<List<MoviePopular>>() {
             @Override
             public void onChanged(@Nullable List<MoviePopular> moviePopulars) {
-                if(!moviePopulars.isEmpty()){
+                Log.d("topRatedObserver","is empty: "+moviePopulars.isEmpty());
+               /* if(!moviePopulars.isEmpty()){
                     binding.popularList.setAdapter(adapter);
                     binding.popularProgresBar.setVisibility(View.GONE);
                     adapter.setInfo(moviePopulars);
-                    }else viewModel.callPopular();
+                    }else viewModel.callPopular();*/
             }
         });
 

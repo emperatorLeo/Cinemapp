@@ -4,6 +4,7 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -13,12 +14,24 @@ import com.independenciatecnologica.cinemapp.model.MoviePopular;
 import com.independenciatecnologica.cinemapp.model.MovieTopRated;
 import com.independenciatecnologica.cinemapp.model.MovieUpComing;
 
-@Database(entities = {MovieTopRated.class,MovieUpComing.class,MoviePopular.class},version = 1)
+@Database(entities = {MovieTopRated.class,MovieUpComing.class,MoviePopular.class},version = 2)
 public abstract class MovieDataBase extends RoomDatabase {
 
     public abstract MovieDao movieDao();
 
     private static volatile MovieDataBase INSTANCE;
+
+    private static Migration MIGRATION_1_2  = new Migration(1,2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE table_top_rated ADD COLUMN budget INTEGER NOT NULL DEFAULT 0");
+            database.execSQL("ALTER TABLE table_top_rated ADD COLUMN overview TEXT");
+            database.execSQL("ALTER TABLE table_upcoming ADD COLUMN budget INTEGER NOT NULL DEFAULT 0");
+            database.execSQL("ALTER TABLE table_upcoming ADD COLUMN overview TEXT");
+            database.execSQL("ALTER TABLE table_popular ADD COLUMN budget INTEGER NOT NULL DEFAULT 0");
+            database.execSQL("ALTER TABLE table_popular ADD COLUMN overview TEXT");
+            }
+    };
 
     static MovieDataBase getDatabase (final Context context){
         if (INSTANCE == null){
@@ -27,6 +40,8 @@ public abstract class MovieDataBase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             MovieDataBase.class,"Movie_database")
                             .addCallback(sRoomCallback)
+                            .fallbackToDestructiveMigration()
+                            .addMigrations(MIGRATION_1_2)
                             .build();
                 }
             }

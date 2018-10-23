@@ -33,6 +33,28 @@ public class MovieUpComing {
     @SerializedName("release_date")
     @ColumnInfo(name="release_date")
     private String releaseDate;
+    @SerializedName("budget")
+    @ColumnInfo(name="budget")
+    private int budget;
+    @ColumnInfo(name = "overview")
+    @SerializedName("overview")
+    private String overview;
+
+    public int getBudget() {
+        return budget;
+    }
+
+    public void setBudget(int budget) {
+        this.budget = budget;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
 
     @NonNull
     public int getId() {

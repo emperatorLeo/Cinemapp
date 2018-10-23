@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +36,12 @@ public class MovieUpComingFragment extends Fragment {
         viewModel.getUpComingList().observe(this, new Observer<List<MovieUpComing>>() {
             @Override
             public void onChanged(@Nullable List<MovieUpComing> movieUpComings) {
-                if(!movieUpComings.isEmpty()){
+                Log.d("topRatedObserver","is empty: "+movieUpComings.isEmpty());
+               /* if(!movieUpComings.isEmpty()){
                     binding.upComingList.setAdapter(adapter);
                     binding.upComingProgresBar.setVisibility(View.GONE);
                     adapter.setInfo(movieUpComings);
-                    }else viewModel.callUpComing();
+                    }else viewModel.callUpComing();*/
             }
         });
 

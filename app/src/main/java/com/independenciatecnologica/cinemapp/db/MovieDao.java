@@ -16,7 +16,7 @@ public interface MovieDao {
 
     @Insert
     void insertListPopular(List<MoviePopular> listWord);
-
+/**/
     @Insert
     void insertListTopRated(List<MovieTopRated> listWord);
 
@@ -25,7 +25,7 @@ public interface MovieDao {
 
     @Query("DELETE FROM table_top_rated")
     void deleteTopRated();
-
+    /**/
     @Query("DELETE FROM table_popular")
     void deletePopular();
 
@@ -37,7 +37,7 @@ public interface MovieDao {
 
     @Query("SELECT * from table_top_rated")
     LiveData<List<MovieTopRated>> getTopRated();
-
+    /**/
     @Query("SELECT * from table_upcoming")
     LiveData<List<MovieUpComing>> getUpcoming();
 

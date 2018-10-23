@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import android.view.ViewGroup;
 import com.independenciatecnologica.cinemapp.R;
 import com.independenciatecnologica.cinemapp.adapter.TopRatedAdapter;
 import com.independenciatecnologica.cinemapp.databinding.FragmentMovieTopRatedBinding;
-import com.independenciatecnologica.cinemapp.model.MovieTopRated;
+//import com.independenciatecnologica.cinemapp.model.MovieTopRated;
 import com.independenciatecnologica.cinemapp.viewModel.MoviesTopRatedViewModel;
 
 import java.util.List;
@@ -32,16 +33,17 @@ public class MovieTopRatedFragment extends Fragment {
         binding.topRatedProgressBar.setVisibility(View.VISIBLE);
         adapter = new TopRatedAdapter(getContext());
         viewModel = ViewModelProviders.of(this).get(MoviesTopRatedViewModel.class);
-        viewModel.getTopRatedList().observe(this, new Observer<List<MovieTopRated>>() {
+      /*  viewModel.getTopRatedList().observe(this, new Observer<List<MovieTopRated>>() {
             @Override
             public void onChanged(@Nullable List<MovieTopRated> movieTopRateds) {
-                if(!movieTopRateds.isEmpty()){
+                Log.d("topRatedObserver","is empty: "+movieTopRateds.isEmpty());
+              /*  if(!movieTopRateds.isEmpty()){
                     binding.topRatedList.setAdapter(adapter);
                     binding.topRatedProgressBar.setVisibility(View.GONE);
                     adapter.setInfo(movieTopRateds);
                     }else viewModel.callTopRated();
              }
-        });
+        });*/
         return binding.getRoot();
     }
 }
