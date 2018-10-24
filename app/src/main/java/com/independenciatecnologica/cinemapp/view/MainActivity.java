@@ -1,5 +1,6 @@
 package com.independenciatecnologica.cinemapp.view;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 
 import android.support.v4.app.FragmentManager;
@@ -14,12 +15,14 @@ import android.view.MenuItem;
 import com.independenciatecnologica.cinemapp.R;
 
 import com.independenciatecnologica.cinemapp.databinding.ActivityMainBinding;
+import com.independenciatecnologica.cinemapp.viewModel.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = "LeoDev";
     private FragmentManager manager;
     private FragmentTransaction transaction;
-    private SearchView searchView;
+    public SearchView searchView;
+    private MainActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private void initBinding(){
         getSupportActionBar().hide();
         ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
-        searchView = (SearchView)findViewById(R.id.searcher);
-        searchView.setFocusable(false);
+        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        binding.setLifecycleOwner(this);
+        binding.setViewModel(viewModel);
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
         transaction.replace(R.id.bigContainer,new ContainerMovieFragment());
@@ -69,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         binding.bottomNavigation.setSelectedItemId(R.id.action_movies);*/
-        binding.setLifecycleOwner(this);
+
     }
 }
 

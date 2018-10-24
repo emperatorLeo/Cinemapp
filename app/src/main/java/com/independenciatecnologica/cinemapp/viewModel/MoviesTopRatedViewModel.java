@@ -26,13 +26,14 @@ import static com.independenciatecnologica.cinemapp.utils.Constants.apiKey;
 
 public class MoviesTopRatedViewModel extends AndroidViewModel {
     private Repository repository;
-    private MutableLiveData<Integer>loading;
+    public MutableLiveData<Integer>loading;
 
     public MoviesTopRatedViewModel(Application context){
            super(context);
            repository = new Repository(context);
 
        }
+
 
     public void callTopRated(){
            repository.callTopRatedFromApi();
@@ -45,8 +46,9 @@ public class MoviesTopRatedViewModel extends AndroidViewModel {
     public MutableLiveData<Integer> getLoading(){
            if(loading==null){
                loading = new MutableLiveData<>();
-               loading.setValue(8);
+               loading.setValue(0);
            }
+        Log.d("TopRatedVM","loading: "+loading.getValue());
         return loading;
     }
 
@@ -55,7 +57,6 @@ public class MoviesTopRatedViewModel extends AndroidViewModel {
                loading.setValue(mLoading);
             }*/
     public LiveData<List<MovieTopRated>> getTopRatedList(){
-        Log.d("repo","calling data ...");
         return repository.getTopRatedList();
     }
 

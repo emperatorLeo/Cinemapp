@@ -17,6 +17,7 @@ import com.independenciatecnologica.cinemapp.R;
 import com.independenciatecnologica.cinemapp.adapter.PopularAdapter;
 import com.independenciatecnologica.cinemapp.databinding.FragmentMoviePopularBinding;
 import com.independenciatecnologica.cinemapp.model.MoviePopular;
+import com.independenciatecnologica.cinemapp.viewModel.MainActivityViewModel;
 import com.independenciatecnologica.cinemapp.viewModel.MoviesPopularViewModel;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class MoviePopularFragment extends Fragment {
    private MoviesPopularViewModel viewModel;
    private FragmentMoviePopularBinding binding ;
    private PopularAdapter adapter;
+   private MainActivityViewModel mainVM;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,6 +35,13 @@ public class MoviePopularFragment extends Fragment {
         binding.popularProgresBar.setVisibility(View.VISIBLE);
         adapter = new PopularAdapter(getContext());
         viewModel = ViewModelProviders.of(this).get(MoviesPopularViewModel.class);
+        mainVM = ViewModelProviders.of(getActivity()).get(MainActivityViewModel.class);
+        observers();
+
+        return binding.getRoot();
+    }
+
+    private void observers(){
         viewModel.getPopularList().observe(this, new Observer<List<MoviePopular>>() {
             @Override
             public void onChanged(@Nullable List<MoviePopular> moviePopulars) {
@@ -41,11 +50,15 @@ public class MoviePopularFragment extends Fragment {
                     binding.popularList.setAdapter(adapter);
                     binding.popularProgresBar.setVisibility(View.GONE);
                     adapter.setInfo(moviePopulars);
-                    }else viewModel.callPopular();/**/
+                }else viewModel.callPopular();/**/
             }
         });
-
-        return binding.getRoot();
+        mainVM.getQuery().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                Log.d("PopularFra","query: "+s);
+            }
+        });
     }
 
 }

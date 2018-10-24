@@ -19,6 +19,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:iconifiedByDefault="false"
             app:queryHint="@string/search"
+            app:queryTextListener="@{viewModel.onQueryTextListener}"
+            android:focusable="@{viewModel.focusable}"
             />
         <!-- -->
                 <FrameLayout

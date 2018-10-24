@@ -1,6 +1,9 @@
 package com.independenciatecnologica.cinemapp.view;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,6 +14,8 @@ import android.view.ViewGroup;
 
 import com.independenciatecnologica.cinemapp.R;
 import com.independenciatecnologica.cinemapp.adapter.MoviePagerAdapter;
+import com.independenciatecnologica.cinemapp.viewModel.MainActivityViewModel;
+
 import static com.independenciatecnologica.cinemapp.utils.Constants.TAG;
 public class ContainerMovieFragment extends Fragment {
   private View view;

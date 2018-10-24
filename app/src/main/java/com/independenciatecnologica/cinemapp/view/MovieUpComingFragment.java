@@ -17,6 +17,7 @@ import com.independenciatecnologica.cinemapp.R;
 import com.independenciatecnologica.cinemapp.adapter.UpComingAdapter;
 import com.independenciatecnologica.cinemapp.databinding.FragmentMovieUpcomingBinding;
 import com.independenciatecnologica.cinemapp.model.MovieUpComing;
+import com.independenciatecnologica.cinemapp.viewModel.MainActivityViewModel;
 import com.independenciatecnologica.cinemapp.viewModel.MoviesUpComingViewModel;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class MovieUpComingFragment extends Fragment {
     private MoviesUpComingViewModel viewModel;
     private FragmentMovieUpcomingBinding binding;
     private UpComingAdapter adapter;
+    private MainActivityViewModel mainVM;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,19 +35,34 @@ public class MovieUpComingFragment extends Fragment {
         binding.upComingProgresBar.setVisibility(View.VISIBLE);
         adapter = new UpComingAdapter(getContext());
         viewModel = ViewModelProviders.of(this).get(MoviesUpComingViewModel.class);
-        viewModel.getUpComingList().observe(this, new Observer<List<MovieUpComing>>() {
-            @Override
-            public void onChanged(@Nullable List<MovieUpComing> movieUpComings) {
-                Log.d("topRatedObserver","is empty: "+movieUpComings.isEmpty());
-               if(!movieUpComings.isEmpty()){
-                    binding.upComingList.setAdapter(adapter);
-                    binding.upComingProgresBar.setVisibility(View.GONE);
-                    adapter.setInfo(movieUpComings);
-                    }else viewModel.callUpComing(); /**/
-            }
-        });
+        mainVM = ViewModelProviders.of(getActivity()).get(MainActivityViewModel.class);
+        observers();
+
 
 
         return binding.getRoot();
+    }
+
+    private void observers(){
+        viewModel.getUpComingList().observe(this, new Observer<List<MovieUpComing>>() {
+            @Override
+            public void onChanged(@Nullable List<MovieUpComing> movieUpComings) {
+                Log.d("upComingObserver","is empty: "+movieUpComings.isEmpty());
+
+                if(!movieUpComings.isEmpty()){
+                    binding.upComingList.setAdapter(adapter);
+                    binding.upComingProgresBar.setVisibility(View.GONE);
+                    adapter.setInfo(movieUpComings);
+                }else viewModel.callUpComing(); /**/
+            }
+        });
+
+        mainVM.getQuery().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+
+                Log.d("upComing","query: "+s);
+            }
+        });
     }
 }
