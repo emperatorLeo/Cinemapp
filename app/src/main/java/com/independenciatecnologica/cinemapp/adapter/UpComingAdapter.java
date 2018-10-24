@@ -1,6 +1,7 @@
 package com.independenciatecnologica.cinemapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,18 +10,22 @@ import android.view.ViewGroup;
 
 import com.independenciatecnologica.cinemapp.R;
 import com.independenciatecnologica.cinemapp.databinding.ItemUpcomingBinding;
+import com.independenciatecnologica.cinemapp.handlers.Upcoming;
 import com.independenciatecnologica.cinemapp.model.MovieUpComing;
+import com.independenciatecnologica.cinemapp.view.DetailsActivity;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpComingAdapter extends RecyclerView.Adapter<UpComingAdapter.MovieHolder> {
+public class UpComingAdapter extends RecyclerView.Adapter<UpComingAdapter.MovieHolder> implements Upcoming {
 
     private List<MovieUpComing> listItem = new ArrayList<>();
     private LayoutInflater inflater;
+    private Context context;
 
     public UpComingAdapter(Context context){
+        this.context = context;
         inflater = LayoutInflater.from(context);
     }
     public void setInfo(List<MovieUpComing> list){
@@ -39,11 +44,20 @@ public class UpComingAdapter extends RecyclerView.Adapter<UpComingAdapter.MovieH
     public void onBindViewHolder(@NonNull MovieHolder movieHolder, int i) {
         MovieUpComing model = listItem.get(i);
         movieHolder.bind(model);
+        movieHolder.binding.setListener(this);
     }
 
     @Override
     public int getItemCount() {
         return listItem.size();
+    }
+
+    @Override
+    public void detailsUpcoming(MovieUpComing item) {
+        Intent intent = new Intent(context,DetailsActivity.class);
+        intent.putExtra("table","upcoming");
+        intent.putExtra("id",item.getId());
+        context.startActivity(intent);
     }
 
     public class MovieHolder extends RecyclerView.ViewHolder{
@@ -53,6 +67,7 @@ public class UpComingAdapter extends RecyclerView.Adapter<UpComingAdapter.MovieH
         public MovieHolder (ItemUpcomingBinding binding){
             super(binding.getRoot());
             this.binding = binding;
+
         }
 
         public void bind(MovieUpComing item){

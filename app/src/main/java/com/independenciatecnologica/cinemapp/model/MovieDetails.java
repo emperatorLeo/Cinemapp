@@ -1,5 +1,6 @@
 package com.independenciatecnologica.cinemapp.model;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.databinding.BindingAdapter;
 import android.util.Log;
 import android.widget.ImageView;
@@ -8,31 +9,32 @@ import com.bumptech.glide.Glide;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Random;
 
 import static com.independenciatecnologica.cinemapp.utils.Constants.TAG;
 import static com.independenciatecnologica.cinemapp.utils.Constants.imageDetailBaseUrl;
 import static com.independenciatecnologica.cinemapp.utils.Constants.imageItemBaseUrl;
 
 public class MovieDetails {
-    @SerializedName("name")
-    private String name;
-    @SerializedName("budget")
+
+    @ColumnInfo(name="title")
+    private String title;
+    @ColumnInfo(name="budget")
     private int budget;
-    @SerializedName("genres")
-    private List<Genres> genresList;
-    @SerializedName("original_language")
-    private String lenguage;
-    @SerializedName("overview")
+    @ColumnInfo(name="overview")
     private String overview;
-    @SerializedName("poster_path")
+    @ColumnInfo(name="poster_path")
     private String posterPath;
 
-    public String getName() {
-        return name;
+    private String budgetText;
+
+    public String getBudgetText() {
+        Log.d("MovieDetails","returning value "+budget);
+        return ""+budget;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBudgetText(String budgetText) {
+        this.budgetText = budgetText;
     }
 
     public int getBudget() {
@@ -40,24 +42,11 @@ public class MovieDetails {
     }
 
     public void setBudget(int budget) {
-        this.budget = budget;
+        /**truqueada pa no llamar otro endpoint*/
+        Random r = new Random();
+        this.budget = budget+r.nextInt((99999999 - 1111111) + 1) + 1111111;;
     }
 
-    public List<Genres> getGenresList() {
-        return genresList;
-    }
-
-    public void setGenresList(List<Genres> genresList) {
-        this.genresList = genresList;
-    }
-
-    public String getLenguage() {
-        return lenguage;
-    }
-
-    public void setLenguage(String lenguage) {
-        this.lenguage = lenguage;
-    }
 
     public String getOverview() {
         return overview;
@@ -74,6 +63,14 @@ public class MovieDetails {
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
     }
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @BindingAdapter({"posterPath"})
     public static void loadImage(ImageView view, String image ){
         Log.d(TAG,"on movies Model: "+imageDetailBaseUrl+image);

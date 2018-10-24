@@ -16,6 +16,7 @@ import com.independenciatecnologica.cinemapp.R;
 import com.independenciatecnologica.cinemapp.adapter.TopRatedAdapter;
 import com.independenciatecnologica.cinemapp.databinding.FragmentMovieTopRatedBinding;
 //import com.independenciatecnologica.cinemapp.model.MovieTopRated;
+import com.independenciatecnologica.cinemapp.model.MovieTopRated;
 import com.independenciatecnologica.cinemapp.viewModel.MoviesTopRatedViewModel;
 
 import java.util.List;
@@ -31,19 +32,22 @@ public class MovieTopRatedFragment extends Fragment {
                 R.layout.fragment_movie_top_rated,container,false);
         binding.topRatedList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.topRatedProgressBar.setVisibility(View.VISIBLE);
-        adapter = new TopRatedAdapter(getContext());
+        adapter = new TopRatedAdapter(getActivity());
         viewModel = ViewModelProviders.of(this).get(MoviesTopRatedViewModel.class);
-      /*  viewModel.getTopRatedList().observe(this, new Observer<List<MovieTopRated>>() {
+        viewModel.getTopRatedList().observe(this, new Observer<List<MovieTopRated>>() {
             @Override
             public void onChanged(@Nullable List<MovieTopRated> movieTopRateds) {
+
                 Log.d("topRatedObserver","is empty: "+movieTopRateds.isEmpty());
-              /*  if(!movieTopRateds.isEmpty()){
+
+               if(!movieTopRateds.isEmpty()){
                     binding.topRatedList.setAdapter(adapter);
                     binding.topRatedProgressBar.setVisibility(View.GONE);
                     adapter.setInfo(movieTopRateds);
-                    }else viewModel.callTopRated();
+                    Log.d("topRatedObserver","Budget: "+movieTopRateds.get(0).getBudget());
+                    }else viewModel.callTopRated(); /**/
              }
-        });*/
+        });/* viewModel.delteAll();*/
         return binding.getRoot();
     }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.independenciatecnologica.cinemapp.api.CinemappClient;
 import com.independenciatecnologica.cinemapp.api.CinemappService;
+import com.independenciatecnologica.cinemapp.model.MovieDetails;
 import com.independenciatecnologica.cinemapp.model.MoviePopular;
 import com.independenciatecnologica.cinemapp.model.MovieTopRated;
 import com.independenciatecnologica.cinemapp.model.MovieUpComing;
@@ -142,7 +143,7 @@ public class Repository {
         call.enqueue(new Callback<ResultCallTopRated>() {
             @Override
             public void onResponse(Call<ResultCallTopRated> call, Response<ResultCallTopRated> response) {
-
+                Log.d("repoTopRated","Overview: "+response.body().getMovies().get(0).getOverview());
                 inserTopRated(response.body().getMovies());
 
                 }
@@ -194,5 +195,15 @@ public class Repository {
                 Log.e(TAG,"error: "+t.getMessage());
             }
         });
+    }
+
+    public LiveData<MovieDetails> getTopRatedDetails(int id){
+        return dao.getTopRatedDetails(id);
+    }
+    public LiveData<MovieDetails>getPopularDetails(int id){
+        return dao.getPopularDetails(id);
+    }
+    public LiveData<MovieDetails>getUpComingsDetails(int id){
+        return dao.getUpcomingDetails(id);
     }
 }

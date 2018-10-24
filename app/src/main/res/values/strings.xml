@@ -8,5 +8,8 @@
     <string name="label_vote">Votes :</string>
     <string name="label_released">Released :</string>
     <string name="label_details">Details</string>
+    <string name="label_budget">Budget</string>
+    <string name="label_overview">Overview</string>
+
 
 </resources>

@@ -49,6 +49,7 @@ public class MovieTopRated {
     }
 
     public void setBudget(int budget) {
+        Log.d("modelTopRated","budget: "+budget);
         this.budget = budget;
     }
 

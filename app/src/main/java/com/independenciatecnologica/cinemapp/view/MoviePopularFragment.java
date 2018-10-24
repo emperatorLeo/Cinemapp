@@ -37,11 +37,11 @@ public class MoviePopularFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<MoviePopular> moviePopulars) {
                 Log.d("topRatedObserver","is empty: "+moviePopulars.isEmpty());
-               /* if(!moviePopulars.isEmpty()){
+                if(!moviePopulars.isEmpty()){
                     binding.popularList.setAdapter(adapter);
                     binding.popularProgresBar.setVisibility(View.GONE);
                     adapter.setInfo(moviePopulars);
-                    }else viewModel.callPopular();*/
+                    }else viewModel.callPopular();/**/
             }
         });
 

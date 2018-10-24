@@ -4,7 +4,9 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.RoomWarnings;
 
+import com.independenciatecnologica.cinemapp.model.MovieDetails;
 import com.independenciatecnologica.cinemapp.model.MoviePopular;
 import com.independenciatecnologica.cinemapp.model.MovieTopRated;
 import com.independenciatecnologica.cinemapp.model.MovieUpComing;
@@ -40,5 +42,16 @@ public interface MovieDao {
     /**/
     @Query("SELECT * from table_upcoming")
     LiveData<List<MovieUpComing>> getUpcoming();
+
+    @Query("Select * from table_top_rated WHERE id =:id")
+    LiveData<MovieDetails> getTopRatedDetails(int id);
+/**/
+    @Query("Select * from table_popular WHERE id =:id")
+    LiveData<MovieDetails> getPopularDetails(int id);
+
+    @Query("Select * from table_upcoming WHERE id =:id")
+    LiveData<MovieDetails> getUpcomingDetails(int id);
+
+
 
 }

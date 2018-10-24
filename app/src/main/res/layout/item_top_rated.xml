@@ -5,6 +5,9 @@
         <variable
             name="viewModel"
             type="com.independenciatecnologica.cinemapp.model.MovieTopRated"/>
+        <variable
+            name="listener"
+            type="com.independenciatecnologica.cinemapp.handlers.TopRatedClickListener"/>
     </data>
 
     <LinearLayout
@@ -92,7 +95,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:src="@mipmap/ic_arrow"/>
+                    android:src="@mipmap/ic_arrow"
+                    android:onClick="@{()->listener.detailsTopRated(viewModel)}"/>
 
             </LinearLayout>
         </LinearLayout>

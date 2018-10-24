@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.independenciatecnologica.cinemapp.viewModel.DetailsViewModel"/>
+        <variable
+            name="model"
+            type="com.independenciatecnologica.cinemapp.model.MovieDetails"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:id="@+id/detailsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.1"
+            android:text="@{model.title}"
+            />
+        <ImageView
+            android:id="@+id/detailsPoster"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            app:layout_constraintTop_toBottomOf="@id/detailsTitle"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            bind:posterPath="@{model.posterPath}"/>
+        <TextView
+            android:id="@+id/detailsBudgetLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_budget"
+            app:layout_constraintLeft_toRightOf="@id/detailsPoster"
+            app:layout_constraintTop_toTopOf="@id/detailsPoster"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/detailsBudgetLabel"
+            app:layout_constraintTop_toBottomOf="@id/detailsBudgetLabel"
+            android:text="@{model.budgetText}"
+            />
+        <TextView
+            android:id="@+id/detailsOverviewLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_overview"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailsPoster"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.18"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            />
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailsOverviewLabel"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:text="@{model.overview}"
+            />
+        <ProgressBar
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:visibility="@{viewModel.loader}"/>
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>
