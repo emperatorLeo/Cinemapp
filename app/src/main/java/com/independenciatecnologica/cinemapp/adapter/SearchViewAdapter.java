@@ -13,27 +13,29 @@ import android.widget.Filterable;
 
 import com.independenciatecnologica.cinemapp.R;
 import com.independenciatecnologica.cinemapp.databinding.ItemPopularBinding;
-import com.independenciatecnologica.cinemapp.databinding.ItemUpcomingBinding;
-import com.independenciatecnologica.cinemapp.handlers.PopularClickListener;
 import com.independenciatecnologica.cinemapp.model.MoviePopular;
-import com.independenciatecnologica.cinemapp.model.MovieUpComing;
-import com.independenciatecnologica.cinemapp.view.DetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MovieHolder> implements PopularClickListener,Filterable {
+public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.MovieHolder> {
+    /*  implements Filterable */
+
     private List<MoviePopular> toCopy ;
     private List<MoviePopular> listItem ;
     private LayoutInflater inflater;
     private Context context;
-    public PopularAdapter(Context context){
+
+    public SearchViewAdapter(Context context){
         this.context = context;
         inflater = LayoutInflater.from(context);
+        this.listItem = new ArrayList<>();
     }
     public void setInfo(List<MoviePopular> list){
-        this.listItem = new ArrayList<>(list);
-        this.toCopy = new ArrayList<>(list);
+        this.listItem.clear();
+        this.listItem.addAll(list);
+        notifyDataSetChanged();
+
     }
 
 
@@ -49,20 +51,11 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MovieHol
     public void onBindViewHolder(@NonNull MovieHolder movieHolder, int i) {
         MoviePopular model = listItem.get(i);
         movieHolder.bind(model);
-        movieHolder.binding.setListener(this);
     }
 
     @Override
     public int getItemCount() {
         return listItem.size();
-    }
-
-    @Override
-    public void detailsPopular(MoviePopular item) {
-        Intent intent = new Intent(context,DetailsActivity.class);
-        intent.putExtra("table","popular");
-        intent.putExtra("id",item.getId());
-        context.startActivity(intent);
     }
 
     public class MovieHolder extends RecyclerView.ViewHolder{
@@ -81,36 +74,29 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MovieHol
 
         }
     }
-
+/*
     @Override
     public Filter getFilter() {
-        if(toCopy!=null){
-            return filter;
-            }
-        return null;
+        return filter;
     }
 
     private Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
             Log.d("Adapter","string: "+constraint);
-            if(toCopy!=null) {
-                List<MoviePopular> filteredList = new ArrayList<>();
-                if (constraint == null || constraint.length() == 0) {
-                    filteredList.addAll(toCopy);
-                } else {
-                    String pattern = constraint.toString().toLowerCase().trim();
-                    for (MoviePopular item : toCopy) {
-                        if (item.getTitle().toLowerCase().contains(pattern)) {
-                            filteredList.add(item);
-                        }
+            List<MoviePopular> filteredList = new ArrayList<>();
+            if(constraint == null || constraint.length()==0){
+                filteredList.addAll(toCopy);
+            }else{
+                String pattern = constraint.toString().toLowerCase().trim();
+                for(MoviePopular item : toCopy){
+                    if(item.getTitle().toLowerCase().contains(pattern)){
+                        filteredList.add(item);
                     }
                 }
-
-                results.values = filteredList;
-                return results;
             }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
             return results;
 
         }
@@ -123,5 +109,5 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MovieHol
                 notifyDataSetChanged();
             }
         }
-    };
+    };*/
 }

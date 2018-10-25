@@ -72,6 +72,7 @@ public class MovieTopRatedFragment extends Fragment {
 
             @Override
             public void onChanged(@Nullable String s) {
+                if(adapter.getFilter()!=null)
                 adapter.getFilter().filter(s);
             }
         });

@@ -85,7 +85,10 @@ public class UpComingAdapter extends RecyclerView.Adapter<UpComingAdapter.MovieH
 
     @Override
     public Filter getFilter() {
-        return filter;
+        if(toCopy!=null){
+            return filter;
+        }
+        return null;
     }
 
     private Filter filter = new Filter() {

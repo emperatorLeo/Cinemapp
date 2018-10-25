@@ -32,6 +32,7 @@ public class ContainerMovieFragment extends Fragment {
         pagerAdapter.addFragments(new MovieTopRatedFragment(),"Top Rated");
         pagerAdapter.addFragments(new MoviePopularFragment(),"Popular");
         pagerAdapter.addFragments(new MovieUpComingFragment(),"Up coming");
+        pagerAdapter.addFragments(new SearchFragment(),"Search");
         pager.setAdapter(pagerAdapter);
         Log.d(TAG,"pager adapter count: "+pagerAdapter.getCount());
         pager.setCurrentItem(0);

@@ -2,6 +2,7 @@ package com.independenciatecnologica.cinemapp.db;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
@@ -32,7 +33,7 @@ public class Repository {
     private LiveData<List<MovieTopRated>> topRatedList;
     private LiveData<List<MovieUpComing>> upComingList;
     private LiveData<List<MoviePopular>> popularList;
-
+    private MutableLiveData<List<MoviePopular>> searchList;
 
 /*
     public Repository(Application application){
@@ -49,6 +50,7 @@ public class Repository {
         topRatedList = dao.getTopRated();
         upComingList = dao.getUpcoming();
         popularList = dao.getPopular();
+        searchList = new MutableLiveData<>();
     }
 
     public LiveData<List<MovieTopRated>>getTopRatedList(){
@@ -197,6 +199,35 @@ public class Repository {
         });
     }
 
+    public LiveData<List<MoviePopular>>getSearchList(){
+       return searchList;
+    }
+
+    public void callSearch(String query){
+        CinemappClient client = CinemappService.builder();
+        Call<ResultCallPopular> call = client.search(query,apiKey);
+        call.enqueue(new Callback<ResultCallPopular>() {
+            @Override
+            public void onResponse(Call<ResultCallPopular> call, Response<ResultCallPopular> response) {
+
+                searchList.setValue(response.body().getMovies());
+                /*
+                if(response.body().getMovies().isEmpty()){
+                    Log.d(TAG,"calling from SEarch : is null");
+
+                }else{
+
+                    searchList.setValue(response.body().getMovies());
+                }*/
+            }
+
+            @Override
+            public void onFailure(Call<ResultCallPopular> call, Throwable t) {
+
+            }
+        });
+    }
+
     public LiveData<MovieDetails> getTopRatedDetails(int id){
         return dao.getTopRatedDetails(id);
     }
@@ -206,4 +237,5 @@ public class Repository {
     public LiveData<MovieDetails>getUpComingsDetails(int id){
         return dao.getUpcomingDetails(id);
     }
+
 }

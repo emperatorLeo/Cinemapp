@@ -59,8 +59,8 @@ public class MoviePopularFragment extends Fragment {
         mainVM.getQuery().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                adapter.getFilter().filter(s);
-
+                if(adapter.getFilter()!=null)
+                    adapter.getFilter().filter(s);
             }
         });
     }

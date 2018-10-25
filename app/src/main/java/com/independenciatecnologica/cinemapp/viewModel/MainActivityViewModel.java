@@ -19,10 +19,12 @@ import static com.independenciatecnologica.cinemapp.utils.Constants.TAG;
 
 public class MainActivityViewModel extends ViewModel {
     private MutableLiveData<String> query = new MutableLiveData<>();
+    private MutableLiveData<String> querySearch = new MutableLiveData<>();
     private boolean focusable = false;
     private final SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String s) {
+            querySearch.setValue(s);
             return false;
         }
 
@@ -49,9 +51,15 @@ public class MainActivityViewModel extends ViewModel {
         return query;
     }
 
+    public LiveData<String> getQuerySearch() {
+        return querySearch;
+    }
 
+    public void setQuerySearch(MutableLiveData<String> querySearch) {
+        this.querySearch = querySearch;
+    }
 
-    public boolean onNavigationItemSelected( MenuItem menuItem) {
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
 
         switch (menuItem.getItemId()){
             case R.id.action_movies:

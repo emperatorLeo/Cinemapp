@@ -23,6 +23,10 @@ public interface CinemappClient {
    @GET("/3/movie/upcoming")
    Call<ResultCallUpComing> moviesUpComing(@Query("api_key")String apiKey);
 
+   @GET("/3/search/movie")
+   Call<ResultCallPopular> search(@Query("query")String query,
+                                  @Query("api_key")String apiKey);
+
    @GET("/3/movie/{movie_id}")
    Call<MovieDetails> moviesDetails(@Path("movie_id")String id);
 

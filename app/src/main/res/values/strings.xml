@@ -10,6 +10,7 @@
     <string name="label_details">Details</string>
     <string name="label_budget">Budget</string>
     <string name="label_overview">Overview</string>
+    <string name="label_viewholder">seems you have not searched nothing yet</string>
 
 
 </resources>

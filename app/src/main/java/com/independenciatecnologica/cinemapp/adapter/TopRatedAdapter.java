@@ -75,7 +75,10 @@ public class TopRatedAdapter  extends RecyclerView.Adapter<TopRatedAdapter.Movie
 
     @Override
     public Filter getFilter() {
-        return filter;
+        if(toCopy!=null){
+            return filter;
+        }
+        return null;
     }
     private Filter filter = new Filter() {
         @Override

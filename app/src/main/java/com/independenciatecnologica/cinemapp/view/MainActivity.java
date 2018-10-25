@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = "LeoDev";
     private FragmentManager manager;
     private FragmentTransaction transaction;
-    public SearchView searchView;
     private MainActivityViewModel viewModel;
 
     @Override
