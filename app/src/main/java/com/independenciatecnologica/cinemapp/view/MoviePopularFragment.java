@@ -27,7 +27,9 @@ public class MoviePopularFragment extends Fragment {
    private FragmentMoviePopularBinding binding ;
    private PopularAdapter adapter;
    private MainActivityViewModel mainVM;
-
+   private boolean visible;
+   private int id;
+   private String TAG = "popularFragment";
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_movie_popular,container,false);
@@ -37,7 +39,8 @@ public class MoviePopularFragment extends Fragment {
         viewModel = ViewModelProviders.of(this).get(MoviesPopularViewModel.class);
         mainVM = ViewModelProviders.of(getActivity()).get(MainActivityViewModel.class);
         observers();
-
+        visible = this.isVisible();
+        this.id = getId();
         return binding.getRoot();
     }
 
@@ -56,7 +59,8 @@ public class MoviePopularFragment extends Fragment {
         mainVM.getQuery().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                Log.d("PopularFra","query: "+s);
+                adapter.getFilter().filter(s);
+
             }
         });
     }

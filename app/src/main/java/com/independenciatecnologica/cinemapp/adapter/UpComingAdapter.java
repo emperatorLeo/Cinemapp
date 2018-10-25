@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import com.independenciatecnologica.cinemapp.R;
 import com.independenciatecnologica.cinemapp.databinding.ItemUpcomingBinding;
 import com.independenciatecnologica.cinemapp.handlers.Upcoming;
+import com.independenciatecnologica.cinemapp.model.MoviePopular;
 import com.independenciatecnologica.cinemapp.model.MovieUpComing;
 import com.independenciatecnologica.cinemapp.view.DetailsActivity;
 
@@ -18,18 +22,20 @@ import com.independenciatecnologica.cinemapp.view.DetailsActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpComingAdapter extends RecyclerView.Adapter<UpComingAdapter.MovieHolder> implements Upcoming {
+public class UpComingAdapter extends RecyclerView.Adapter<UpComingAdapter.MovieHolder> implements Upcoming,Filterable {
 
-    private List<MovieUpComing> listItem = new ArrayList<>();
+    private List<MovieUpComing> listItem ;
     private LayoutInflater inflater;
     private Context context;
+    private List<MovieUpComing> toCopy = new ArrayList<>();
 
     public UpComingAdapter(Context context){
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
     public void setInfo(List<MovieUpComing> list){
-        this.listItem.addAll(list);
+        this.listItem= new ArrayList<>(list);
+        this.toCopy = new ArrayList<>(list);
     }
 
 
@@ -76,5 +82,41 @@ public class UpComingAdapter extends RecyclerView.Adapter<UpComingAdapter.MovieH
 
         }
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            Log.d("Adapter","string: "+constraint);
+            List<MovieUpComing> filteredList = new ArrayList<>();
+            if(constraint == null || constraint.length()==0){
+                filteredList.addAll(toCopy);
+            }else{
+                String pattern = constraint.toString().toLowerCase().trim();
+                for(MovieUpComing item : toCopy){
+                    if(item.getTitle().toLowerCase().contains(pattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            if (listItem != null) {
+                listItem.clear();
+                listItem.addAll((List)results.values);
+                notifyDataSetChanged();
+            }
+
+        }
+    };
 }
 

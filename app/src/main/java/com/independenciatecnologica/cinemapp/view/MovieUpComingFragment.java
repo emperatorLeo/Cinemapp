@@ -27,6 +27,9 @@ public class MovieUpComingFragment extends Fragment {
     private FragmentMovieUpcomingBinding binding;
     private UpComingAdapter adapter;
     private MainActivityViewModel mainVM;
+    private boolean visible;
+    private int id;
+    private String TAG = "upComingFragment";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,7 +41,9 @@ public class MovieUpComingFragment extends Fragment {
         mainVM = ViewModelProviders.of(getActivity()).get(MainActivityViewModel.class);
         observers();
 
-
+        this.id = getId();
+        MovieUpComingFragment fragment = this;
+        visible = fragment.isVisible();
 
         return binding.getRoot();
     }
@@ -60,8 +65,9 @@ public class MovieUpComingFragment extends Fragment {
         mainVM.getQuery().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
+                adapter.getFilter().filter(s);
 
-                Log.d("upComing","query: "+s);
+
             }
         });
     }
