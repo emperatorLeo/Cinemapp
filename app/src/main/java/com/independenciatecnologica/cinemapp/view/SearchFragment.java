@@ -2,7 +2,10 @@ package com.independenciatecnologica.cinemapp.view;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.independenciatecnologica.cinemapp.R;
 import com.independenciatecnologica.cinemapp.adapter.SearchViewAdapter;
@@ -44,14 +48,19 @@ public class SearchFragment extends Fragment {
         mainVM.getQuerySearch().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                if (s.isEmpty() || s == null) {
-                    binding.searchViewHolder.setVisibility(View.VISIBLE);
-                } else {
-                    binding.searchViewHolder.setVisibility(View.GONE);
-                    binding.searchProgresBar.setVisibility(View.VISIBLE);
-                    viewModel.setSearch(s);
-                }
+                if (!isConected()) {
+                    Toast.makeText(getContext(), "there is NO internet connetion!!", Toast.LENGTH_LONG).show();
 
+                } else {
+                    if (s.isEmpty() || s == null) {
+                        binding.searchViewHolder.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.searchViewHolder.setVisibility(View.GONE);
+                        binding.searchProgresBar.setVisibility(View.VISIBLE);
+                        viewModel.setSearch(s);
+                    }
+
+                }
             }
         });
         if (viewModel != null) {
@@ -73,4 +82,11 @@ public class SearchFragment extends Fragment {
 
         }
     }
+
+    private boolean isConected(){
+        ConnectivityManager manager = (ConnectivityManager)getActivity().getApplicationContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = manager.getActiveNetworkInfo();
+        return info!=null && info.isConnected();
+     }
 }
